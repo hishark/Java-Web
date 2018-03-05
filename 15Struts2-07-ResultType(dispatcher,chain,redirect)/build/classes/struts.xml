@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    
+    <!-- 解决提交表单的乱码问题 -->
+    <constant name="struts.i18n.encoding" value="gbk"></constant>
+    
+    <package name="default" namespace="/" extends="struts-default">
+
+<!-- 重点重点 -->
+
+        <action name="loginAction" class="jxnu.edu.cn.x3321.action.LoginAction">
+            
+            <!-- 重定向redirect上下文不相关 loginresult就访问不到数据啦！！之前默认是dispatcher就访问得到数据，因为dispatcher是上下文相关滴 -->
+            <result name="loginSucc" type="redirect">/login/loginResult.jsp</result>
+            <!-- 这个没写 只是意思一哈 -->
+            <result name="loginFail">/login/loginError.jsp</result>
+            <result name="input">/login/login.jsp</result>
+            <!-- 这个没写 只是意思一哈 -->
+        	<result name="fail">/login/login.jsp</result>
+        </action>
+     
+        <action name="loadDataAction" class="jxnu.edu.cn.x3321.action.LoadDataAction" method="loadData">
+        
+            <result name="loadSucc">/reg/list.jsp</result>
+            <!-- 这个没写 只是意思一哈 -->
+            <result name="loadfail">/reg/error.jsp</result>
+        </action>
+        
+        <action name="regAction" class="jxnu.edu.cn.x3321.action.RegAction" method="reg">
+        	
+        	<!-- 先匹配到regSucc 发现类型是chain 则跳转到另外一个加载数据的Action（name值为loadDataAction）-->
+        	<!-- 另外这里面填的是name的属性值噢不是action的文件名 -->
+        	<result name="regSucc" type="chain">loadDataAction</result>
+        	
+        	<!-- 这个没写 意思一下 -->
+        	<result name="regFail">/reg/regFail.jsp</result>
+        	
+       	    <!-- 错误信息返回到reg.jsp -->
+       	    <result name="input">/reg/reg.jsp</result>
+        	
+        </action>
+    </package>
+
+    <include file="example.xml"/>
+
+    <!-- Add packages here -->
+
+</struts>
