@@ -1,0 +1,49 @@
+<!-- 
+进入RegAction之前 先会调用RegAction-validation进行校验!
+ -->
+ 
+ <!-- 第一行不用管 -->
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.2//EN" "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+
+    <!-- name要和reg.jsp里一致 -->
+    <field name="user.userName">
+        <field-validator type="requiredstring">
+         	<!-- 违反了的话这个信息会传到页面上去 -->
+            <message>用户名不能为空</message>
+        </field-validator>
+        <field-validator type="stringlength">
+        	<!-- 规定最小值最大值 也就是字符串规定的长度区间 -->
+        	<param name="minLength">6</param>
+        	<param name="maxLength">10</param>
+        	<!-- 是否去除前后空格 -->
+        	<param name="trim">true</param>
+        	<message>用户名长度必须在${minLength}到${maxLength}之间</message>
+        </field-validator>
+    </field>
+
+	<field name="user.passWord">
+		<field-validator type="requiredstring">
+         	<!-- 违反了的话这个信息会传到页面上去 -->
+            <message>密码不能为空</message>
+        </field-validator>
+        <field-validator type="stringlength">
+        	<!-- 规定最小值最大值 也就是字符串规定的长度区间 -->
+        	<param name="minLength">6</param>
+        	
+        	<!-- 是否去除前后空格 -->
+        	<param name="trim">true</param>
+        	<message>密码长度必须大于${minLength}</message>
+        </field-validator>
+	</field>
+	<field name="user.age">
+		<field-validator type="int">
+			<param name="min">1</param>
+			<param name="max">130</param>
+			<message>年龄必须在${min}到${max}之间</message>
+		</field-validator>
+	</field>
+</validators>
+ 
+ 
