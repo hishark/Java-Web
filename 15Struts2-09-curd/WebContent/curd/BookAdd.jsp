@@ -13,7 +13,7 @@
   <body onload="">
   <div align="center">&nbsp; 
     增加图书 <br>
-   <s:form  action="Store" method="post" >
+   <s:form  action="AddBook" method="post" >
      <s:textfield name="book.isbn"  label="isbn"></s:textfield>
      <s:textfield name="book.title" label="title"></s:textfield>
      <s:textfield name="book.price" label="price"></s:textfield>
@@ -21,8 +21,9 @@
      
    </s:form>
    
-   <a href='<s:url action="Page"><s:param name="pageNow" value="1" /></s:url>'>返回 </a>
-
+   <!-- <a href='/15Struts2-09-curd/curd/BookList.jsp'>返回 </a> -->
+<!-- !!!!!!!!!!!!! -->
+<a href='<s:url action="page"></s:url>'>返回 </a>
    
    </div>
   </body>

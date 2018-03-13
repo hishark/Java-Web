@@ -18,7 +18,7 @@
         <action name="loginAction" class="jxnu.edu.cn.x3321.action.LoginAction">
             
             <!-- 重定向redirect上下文不相关 loginresult就访问不到数据啦！！之前默认是dispatcher就访问的到数据 dispatcher是上下文相关滴 -->
-            <result name="loginSucc" type="redirect">/login/loginResult.jsp</result>
+            <result name="loginSucc" type="chain">page</result>
             <!-- 这个没写 只是意思一哈 -->
             <result name="loginFail">/login/loginError.jsp</result>
             <result name="input">/login/login.jsp</result>
@@ -47,6 +47,52 @@
         	<result name="bookListsucc">/curd/BookList.jsp</result>
         	
         	<result name="bookListfail">/curd/error.jsp</result>
+        </action>
+        
+        
+        <action name="AddBook" class="jxnu.edu.cn.x3321.action.BookManagementAction" method="AddBook">
+        	<!-- 数据上下文无关 用redirect -->
+        	<result name="AddBookSucc" type="redirect">/curd/BookAdd.jsp</result>
+        	
+        	<result name="AddBookFail">/curd/error.jsp</result>
+        </action>
+        
+        
+        <action name="bookDelete" class="jxnu.edu.cn.x3321.action.BookManagementAction" method="bookDelete">
+        	<!-- 立马跳转到另一个action所以要用chain -->
+        	<result name="bookDeleteSucc" type="chain">bookList</result>
+        	
+        	<result name="bookDeleteFail">/curd/error.jsp</result>
+        </action>
+        
+        
+        <action name="bookDeletes" class="jxnu.edu.cn.x3321.action.BookManagementAction" method="bookDeletes">
+        	<!-- 立马跳转到另一个action所以要用chain -->
+        	<result name="bookDeletesSucc" type="chain">bookList</result>
+        	
+        	<result name="bookDeletesFail">/curd/error.jsp</result>
+        </action>
+        
+        <action name="bookLoad" class="jxnu.edu.cn.x3321.action.BookManagementAction" method="bookLoad">
+        	 
+        	<result name="bookLoadSucc">/curd/BookEdit.jsp</result>
+        	
+        	<result name="bookLoadFail">/curd/error.jsp</result>
+        </action>
+        
+        
+        <action name="BookUpdate" class="jxnu.edu.cn.x3321.action.BookManagementAction" method="BookUpdate">
+        	 
+        	<result name="bookUpdateSucc" type="chain">bookList</result>
+        	
+        	<result name="bookUpdateFail">/curd/error.jsp</result>
+        </action>
+        
+        <action name="page" class="jxnu.edu.cn.x3321.action.BookManagementAction" method="getBooksByPage">
+        	 
+        	<result name="succ">/curd/BookList.jsp</result>
+        	
+        	<result name="fail">/curd/error.jsp</result>
         </action>
     </package>
 

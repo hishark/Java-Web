@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-<title>Insert title here</title>
+<title>Book List</title>
 </head>
 <body><html>
 <head>
 
-<title>图书列表</title>
+<title>Book List</title>
 <style type="text/css">
-/*  table {
+  table {
 	border: 1px solid black;
 	border-collapse: collapse;
 }
@@ -26,20 +26,17 @@ table thead tr th {
 table tbody tr td {
 	border: 1px solid black;
 	padding: 3px;
-}  */
-#tab {
-	border: 1px solid black;
-	padding: 3px;
-}
+}  
+
 </style>
 
 </head>
 
 <body>
 	<div align="center">
-		<h2>图书列表</h2>
-		<s:form theme="simple">
-			<table cellspacing="0" id="tab">
+		<h2>Book List</h2>
+		<s:form theme="simple" action="bookDeletes">
+			<table cellspacing="0">
 				<thead>
 					<tr>
 						<th>Select</th>
@@ -52,27 +49,45 @@ table tbody tr td {
 				<tbody>
 					<s:iterator value="booksList">
 						<tr>
-							<td><input type="checkbox" name="bookId"
+							<!-- 鐢ㄦ埛閫変腑鐨刡ookId鍏ㄩ儴鏀惧叆bookIds -->
+							<td><input type="checkbox" name="bookIds"
 								value='<s:property value="bookId"/>'></td>
 							<td><s:property value="isbn" /></td>
 							<td><s:property value="title" /></td>
 							<td><s:property value="price" /></td>
-							<td><a href="">Edit</a> <a href="">Delet</a></td>
+							 
+							<td>
+							<a href='<s:url action="bookLoad"><s:param name="bookId" value="bookId"/></s:url>'>Edit</a> 
+							
+							<a href='<s:url action="bookDelete"><s:param name="bookId" value="bookId"/></s:url>'>Delete</a>
+							 
+							</td>
 						</tr>
 					</s:iterator>
 				</tbody>
 			</table>
+			 <br>
 			<s:submit value="RemoveAll" />
+			<br>  
 
-			<a href="/15Struts2-09-curd/curd/BookAdd.jsp">Add</a>
+							
+			
 		</s:form>
 
 
-		<s:form action="bookList" method="post" id="load">
+		<s:form action="page"  id="load">
 
 			<s:submit value="Load"></s:submit>
 
 		</s:form>
+		
+		<a href="/15Struts2-09-curd/curd/BookAdd.jsp">Add</a>
+		<!-- pageNow鏄竴涓彉閲� 鏄疉ction涓敤getset鏂规硶璁剧疆鐨勯偅涓彉閲� -->
+		<a href='<s:url action="page"><s:param name="pageNow" value="1"/></s:url>'>Begin</a> 
+		<a href='<s:url action="page"><s:param name="pageNow" value="pageNow-1"/></s:url>'>Last Page</a> 
+		<a href='<s:url action="page"><s:param name="pageNow" value="pageNow+1"/></s:url>'>Next Page</a> 
+		<a href='<s:url action="page"><s:param name="pageNow" value="pageCount"/></s:url>'>End</a> 
+			
 	</div>
 
 

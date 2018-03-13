@@ -17,7 +17,7 @@
 
 <!-- 验证码加下面两行 -->
 <s:textfield label="验证码" name="VCode"></s:textfield>
-<img id="VCode" src="/15Structs2-01-Test/servlet.VCode">
+<img id="VCode" src="/15Struts2-09-curd/servlet.VCode">
 
 <s:submit value="登    录"></s:submit>
 <s:reset value="重    置"></s:reset>
