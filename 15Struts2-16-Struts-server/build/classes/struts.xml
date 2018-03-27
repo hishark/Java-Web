@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.i18n.encoding" value="gbk"/>
+    
+    
+    <!-- 客户端和服务端交互要定义新的命名空间 -->
+    <package name="activity" namespace="/" extends="json-default">
+    	<!-- result的type现在就只有json了 -->
+    	<action name="loginActivity" class="jxnu.edu.cn.x3321.action.LoginActivityAction"
+    	method="loginActivity">
+    		<!-- result没有名字耶 因为loginActivity返回为空  但是type是json！只能是json！-->
+    		<result type="json">
+    			<!-- 这里是空哒！因为所有的数据都在json里头！struts自动记录了从哪来到哪去 -->
+    		</result>
+    	</action>
+    </package>
+    
+    
+    <package name="default" namespace="/" extends="struts-default">
+        <interceptors>
+           <interceptor name="MyInterceptor" class="jxnu.edu.cn.x3321.interceptor.MyInterceptor"></interceptor>
+           <interceptor name="InterceptorPower" class="jxnu.edu.cn.x3321.interceptor.InterceptorPower"></interceptor>
+        </interceptors>
+        <action name="InterceptorTest" class="jxnu.edu.cn.x3321.action.InterceptorTestAction">
+          <interceptor-ref name="MyInterceptor"/>
+          <interceptor-ref name="defaultStack"/>
+          <result name="succ">/login/login.jsp</result>
+          <result name="fail">/login/error.jsp</result>
+        </action>
+        <action name="loginAction" class="jxnu.edu.cn.x3321.action.LoginAction">
+            <result name="loginSucc" type="chain">page</result>
+            <result name="loginFail">/login/loginError.jsp</result>
+            <result name="input">/login/login.jsp</result>
+            <result name="fail">/login/login.jsp</result>
+        </action>
+        <action name="loadDataAction" class="jxnu.edu.cn.x3321.action.LoadDataAction"
+             method="loadData">
+            <result name="loadSucc">/reg/list.jsp</result>
+            <result name="loadfail">/reg/error.jsp</result>
+        </action>
+        <action name="regAction" class="jxnu.edu.cn.x3321.action.RegAction"
+        method="reg">
+            <result name="regSucc"  type="chain">loadDataAction</result>
+            <result name="regFail">/reg/regFail.jsp</result>
+            <result name="input">/reg/reg.jsp</result>
+        </action>
+        
+        <action name="bookList" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="getBookList">
+            <result name="bookListsucc">/curp/BookList.jsp</result>
+            <result name="bookListfail">/curp/error.jsp</result>
+        </action>
+        
+        <action name="book_*" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="{1}">
+            <interceptor-ref name="InterceptorPower"/>
+            <interceptor-ref name="defaultStack"/>
+            <result name="bookAddSucc" type="redirect">/curp/BookAdd.jsp</result>
+            <result name="bookAddFail">/curp/error.jsp</result>
+            <result name="loginfail">/login/login.jsp</result>
+             <result name="powerfail">/login/login.jsp</result>
+        </action>
+        
+        
+        
+        <action name="bookDelete" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="bookDelete">
+            <result name="bookDeleteSucc" type="chain">bookList</result>
+            <result name="bookDeleteFail">/curp/error.jsp</result>
+        </action>
+        <action name="bookDeletes" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="bookDeletes">
+            <result name="bookDeletesSucc" type="chain">bookList</result>
+            <result name="bookDeletesFail">/curp/error.jsp</result>
+        </action>
+        <action name="bookLoad" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="bookLoad">
+            <result name="bookLoadSucc" >/curp/BookEdit.jsp</result>
+            <result name="bookLoadFail">/curp/error.jsp</result>
+        </action>
+        <action name="bookUpdate" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="bookUpdate">
+            <result name="bookUpdateSucc" type="chain">bookList</result>
+            <result name="bookUpdateFail">/curp/error.jsp</result>
+        </action>
+        <action name="page" class="jxnu.edu.cn.x3321.action.BookManagementAction"
+           method="getBooksByPage">
+            <result name="succ" >/curp/BookList.jsp</result>
+            <result name="fail">/curp/error.jsp</result>
+        </action>
+        <action name="checkUser" class="jxnu.edu.cn.x3321.action.RegAction"
+           method="checkUser">
+            <result name="checkUser" >/reg/ajaxResult.jsp</result>
+            <result name="fail">/curp/error.jsp</result>
+        </action>
+        
+        <action name="train"  class="jxnu.edu.cn.x3321.action.TabbedpanelAction"
+           method="train">
+           <result name="succ">/tabbedPanel/sunyang.jsp</result>
+           <result name="fail">/tabbedPanel/error.jsp</result>
+           </action>
+         <action name="job"  class="jxnu.edu.cn.x3321.action.TabbedpanelAction"
+           method="job">
+           <result name="succ">/tabbedPanel/sunyang.jsp</result>
+           <result name="fail">/tabbedPanel/error.jsp</result>
+           </action>
+           
+           <action name="tree"  class="jxnu.edu.cn.x3321.servlet.tree.TreeAction"
+           method="getTree">
+	           <result name="succ">/tree/Tree.jsp</result>
+	           <result name="fail">/tree/error.jsp</result>
+           </action>
+        
+        
+        	<action name="fileUpload" class="jxnu.edu.cn.x3321.action.FileUploadAction" 
+        	method="fileUpload">
+        	<!-- <result name="fileUploadSucc">/file/showFile.jsp</result> -->
+        		<result name="fileUploadSucc">/file/fileDownload.jsp</result>
+        		<result name="fileUploadFail">/file/error.jsp</result>
+        	</action>
+        	
+        	
+        	<action name="Download" class="jxnu.edu.cn.x3321.action.FileDownloadAction"
+        	method="fileDownload">
+        		<!-- stream的意思是把你想要请求的文件以流的形式返回给客户端 -->
+        		<result name="succ" type="stream">
+        			<!-- 流的文件对象 -->
+        			<param name="inputName">targetFile</param>
+        			<param name="contentDisposition">filename="${downloadFile}"</param>
+        			<param name="contentType">application/octet-stream</param>
+        		</result>
+        		
+        	</action>
+    </package>
+
+    <include file="example.xml"/>
+
+    <!-- Add packages here -->
+
+</struts>
